@@ -1,4 +1,4 @@
-import { clone, cloneArray, cloneMap, cloneSet, isPrimitive } from "./index";
+import { CloneDataInDeep } from "./index";
 
 describe('#cloneArray', () => {
     test('clone a simple array', () => {
@@ -6,7 +6,7 @@ describe('#cloneArray', () => {
         const arrayTest = [1, 2, 'hello'];
 
         // Act:
-        const newArray = cloneArray(arrayTest);
+        const newArray = CloneDataInDeep.cloneArray(arrayTest);
 
         // Assert:
         expect(newArray).toEqual(arrayTest);
@@ -18,7 +18,7 @@ describe('#cloneArray', () => {
         const arrayTest: any[] = [1, 2, 'hello', { id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, { data: 99 }] }];
 
         // Act:
-        const newArray: any[] = cloneArray(arrayTest);
+        const newArray: any[] = CloneDataInDeep.cloneArray(arrayTest);
 
         // Assert:
         expect(newArray).toEqual(arrayTest);
@@ -66,7 +66,7 @@ describe('#cloneMap', () => {
         const mapTest = new Map().set('firstKey', 1).set('secondKey', true).set(99, new Date());
 
         // Act:
-        const newMap = cloneMap(mapTest);
+        const newMap = CloneDataInDeep.cloneMap(mapTest);
 
         // Assert:
         expect(newMap).toEqual(mapTest);
@@ -85,7 +85,7 @@ describe('#cloneMap', () => {
             .set(fourth, new Set().add({ id: '1234' }));
 
         // Act:
-        const newMap = cloneMap(mapTest);
+        const newMap = CloneDataInDeep.cloneMap(mapTest);
 
         // Assert:
         expect(newMap).toEqual(mapTest);
@@ -132,7 +132,7 @@ describe('#cloneSet', () => {
         const setTest = new Set().add(99);
 
         // Act:
-        const newSet = cloneSet(setTest);
+        const newSet = CloneDataInDeep.cloneSet(setTest);
 
         // Assert:
         expect(newSet).toEqual(setTest);
@@ -149,7 +149,7 @@ describe('#cloneSet', () => {
             .add([4, { data: 99 }]);
 
         // Act:
-        const newSet = cloneSet(setTest);
+        const newSet = CloneDataInDeep.cloneSet(setTest);
 
         const objFirsSet: any = Array.from(setTest)[1];
         const objFirsSetResult: any = Array.from(newSet)[1];
@@ -205,10 +205,10 @@ describe('#clone Function', () => {
         const dataNumber = 1000;
 
         // Act:
-        const newDataString = clone(dataString);
-        const newDataTime = clone(dataTime);
-        const newDataBoolean = clone(dataBoolean);
-        const newDataNumber = clone(dataNumber);
+        const newDataString = CloneDataInDeep.clone(dataString);
+        const newDataTime = CloneDataInDeep.clone(dataTime);
+        const newDataBoolean = CloneDataInDeep.clone(dataBoolean);
+        const newDataNumber = CloneDataInDeep.clone(dataNumber);
 
         // Assert:
         expect(newDataString).toEqual(dataString);
@@ -223,8 +223,8 @@ describe('#clone Function', () => {
         const dataUndefined = undefined;
 
         // Act:
-        const newDataNull = clone(dataNull);
-        const newDataUndefined = clone(dataUndefined);
+        const newDataNull = CloneDataInDeep.clone(dataNull);
+        const newDataUndefined = CloneDataInDeep.clone(dataUndefined);
 
         // Assert:
         expect(newDataNull).toEqual(dataNull);
@@ -236,7 +236,7 @@ describe('#clone Function', () => {
         const object = { id: '123', name: 'Son Goku', age: 33, date: new Date(), allow: true, injured: false };
 
         // Act:
-        const newObject = clone(object);
+        const newObject = CloneDataInDeep.clone(object);
 
         // Assert:
         expect(newObject).toEqual(object);
@@ -276,7 +276,7 @@ describe('#clone Function', () => {
         };
 
         // Act:
-        const newObject = clone(object);
+        const newObject = CloneDataInDeep.clone(object);
 
         const objFirsSet: any = Array.from(object.setTest)[1];
         const objFirsSetResult: any = Array.from(newObject.setTest)[1];
@@ -324,7 +324,7 @@ describe('#clone Function', () => {
         };
 
         // Act:
-        const clonedObject = clone(object);
+        const clonedObject = CloneDataInDeep.clone(object);
         const unClonedObject = object;
 
         object.date = new Date(2020/11/10);
@@ -348,8 +348,8 @@ describe('#isPrimitive', () => {
         const primitiveDataFalse = false;
 
         // Act:
-        const isPrimitiveResponseTrue: boolean = isPrimitive(primitiveDataTrue);
-        const isPrimitiveResponseFalse: boolean = isPrimitive(primitiveDataFalse);
+        const isPrimitiveResponseTrue: boolean = CloneDataInDeep.isPrimitive(primitiveDataTrue);
+        const isPrimitiveResponseFalse: boolean = CloneDataInDeep.isPrimitive(primitiveDataFalse);
 
         // Assert:
         expect(isPrimitiveResponseTrue).toBeTruthy();
@@ -361,8 +361,8 @@ describe('#isPrimitive', () => {
         const primitiveDataEmpty = '';
 
         // Act:
-        const isPrimitiveResponse: boolean = isPrimitive(primitiveData);
-        const isPrimitiveResponseEmpty: boolean = isPrimitive(primitiveDataEmpty);
+        const isPrimitiveResponse: boolean = CloneDataInDeep.isPrimitive(primitiveData);
+        const isPrimitiveResponseEmpty: boolean = CloneDataInDeep.isPrimitive(primitiveDataEmpty);
 
         // Assert:
         expect(isPrimitiveResponse).toBeTruthy();
@@ -373,7 +373,7 @@ describe('#isPrimitive', () => {
         const primitiveData = new Date();
 
         // Act:
-        const isPrimitiveResponse: boolean = isPrimitive(primitiveData);
+        const isPrimitiveResponse: boolean = CloneDataInDeep.isPrimitive(primitiveData);
 
         // Assert:
         expect(isPrimitiveResponse).toBeTruthy();
@@ -386,9 +386,9 @@ describe('#isPrimitive', () => {
         const primitiveDataPositive = 1;
 
         // Act:
-        const isPrimitiveResponse: boolean = isPrimitive(primitiveData);
-        const isPrimitiveResponseNegative: boolean = isPrimitive(primitiveDataNegative);
-        const isPrimitiveResponsePositive: boolean = isPrimitive(primitiveDataPositive);
+        const isPrimitiveResponse: boolean = CloneDataInDeep.isPrimitive(primitiveData);
+        const isPrimitiveResponseNegative: boolean = CloneDataInDeep.isPrimitive(primitiveDataNegative);
+        const isPrimitiveResponsePositive: boolean = CloneDataInDeep.isPrimitive(primitiveDataPositive);
 
         // Assert:
         expect(isPrimitiveResponse).toBeTruthy();
@@ -402,8 +402,8 @@ describe('#isPrimitive', () => {
         const primitiveDataUndefined = undefined;
 
         // Act:
-        const isPrimitiveResponseNull: boolean = isPrimitive(primitiveDataNull);
-        const isPrimitiveResponseUndefined: boolean = isPrimitive(primitiveDataUndefined);
+        const isPrimitiveResponseNull: boolean = CloneDataInDeep.isPrimitive(primitiveDataNull);
+        const isPrimitiveResponseUndefined: boolean = CloneDataInDeep.isPrimitive(primitiveDataUndefined);
 
         // Assert:
         expect(isPrimitiveResponseNull).toBeTruthy();
@@ -416,8 +416,8 @@ describe('#isPrimitive', () => {
         const objectEmpty = {};
 
         // Act:
-        const isPrimitiveResponseObject: boolean = isPrimitive(object);
-        const isPrimitiveResponseObjectEmpty: boolean = isPrimitive(objectEmpty);
+        const isPrimitiveResponseObject: boolean = CloneDataInDeep.isPrimitive(object);
+        const isPrimitiveResponseObjectEmpty: boolean = CloneDataInDeep.isPrimitive(objectEmpty);
 
         // Assert:
         expect(isPrimitiveResponseObject).toBeFalsy();
@@ -430,8 +430,8 @@ describe('#isPrimitive', () => {
         const mapEmpty = new Map();
 
         // Act:
-        const isPrimitiveResponseMap: boolean = isPrimitive(map);
-        const isPrimitiveResponseMapEmtpy: boolean = isPrimitive(mapEmpty);
+        const isPrimitiveResponseMap: boolean = CloneDataInDeep.isPrimitive(map);
+        const isPrimitiveResponseMapEmtpy: boolean = CloneDataInDeep.isPrimitive(mapEmpty);
 
         // Assert:
         expect(isPrimitiveResponseMap).toBeFalsy();
@@ -444,8 +444,8 @@ describe('#isPrimitive', () => {
         const arrayEmpty: any = [];
 
         // Act:
-        const isPrimitiveResponseArray: boolean = isPrimitive(array);
-        const isPrimitiveResponseArrayEmtpy: boolean = isPrimitive(arrayEmpty);
+        const isPrimitiveResponseArray: boolean = CloneDataInDeep.isPrimitive(array);
+        const isPrimitiveResponseArrayEmtpy: boolean = CloneDataInDeep.isPrimitive(arrayEmpty);
 
         // Assert:
         expect(isPrimitiveResponseArray).toBeFalsy();
@@ -458,8 +458,8 @@ describe('#isPrimitive', () => {
         const setEmpty: any = new Set();
 
         // Act:
-        const isPrimitiveResponseSet: boolean = isPrimitive(set);
-        const isPrimitiveResponseSetEmtpy: boolean = isPrimitive(setEmpty);
+        const isPrimitiveResponseSet: boolean = CloneDataInDeep.isPrimitive(set);
+        const isPrimitiveResponseSetEmtpy: boolean = CloneDataInDeep.isPrimitive(setEmpty);
 
         // Assert:
         expect(isPrimitiveResponseSet).toBeFalsy();

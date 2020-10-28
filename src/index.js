@@ -11,69 +11,73 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 exports.__esModule = true;
-exports.clone = exports.isPrimitive = exports.cloneArray = exports.cloneSet = exports.cloneMap = void 0;
-function cloneMap(currentMap) {
-    var newMap = new Map();
-    currentMap.forEach(function (val, keyMap, mapVal) {
-        var newVal = clone(val);
-        newMap.set(keyMap, newVal);
-    });
-    return newMap;
-}
-exports.cloneMap = cloneMap;
-function cloneSet(currentSet) {
-    var newSet = new Set();
-    currentSet.forEach(function (value) {
-        var newValue = clone(value);
-        newSet.add(newValue);
-    });
-    return newSet;
-}
-exports.cloneSet = cloneSet;
-function cloneArray(currentArray) {
-    return currentArray.map(function (arrayValue) { return clone(arrayValue); });
-}
-exports.cloneArray = cloneArray;
-function isPrimitive(data) {
-    return data !== Object(data) || data instanceof Date;
-}
-exports.isPrimitive = isPrimitive;
-function clone(obj) {
-    if (isPrimitive(obj)) {
-        return obj;
+exports.CloneDataInDeep = void 0;
+var CloneDataInDeep = /** @class */ (function () {
+    function CloneDataInDeep() {
     }
-    if (obj instanceof Map) {
-        return cloneMap(obj);
-    }
-    if (obj instanceof Set) {
-        return cloneSet(obj);
-    }
-    if (Array.isArray(obj)) {
-        return cloneArray(obj);
-    }
-    var cloneObj = {};
-    for (var _i = 0, _a = Object.entries(obj); _i < _a.length; _i++) {
-        var _b = _a[_i], key = _b[0], value = _b[1];
-        if (isPrimitive(value)) {
-            cloneObj[key] = value;
+    CloneDataInDeep.cloneMap = function (currentMap) {
+        var _this = this;
+        var newMap = new Map();
+        currentMap.forEach(function (val, keyMap, mapVal) {
+            var newVal = _this.clone(val);
+            newMap.set(keyMap, newVal);
+        });
+        return newMap;
+    };
+    CloneDataInDeep.cloneSet = function (currentSet) {
+        var _this = this;
+        var newSet = new Set();
+        currentSet.forEach(function (value) {
+            var newValue = _this.clone(value);
+            newSet.add(newValue);
+        });
+        return newSet;
+    };
+    CloneDataInDeep.cloneArray = function (currentArray) {
+        var _this = this;
+        return currentArray.map(function (arrayValue) { return _this.clone(arrayValue); });
+    };
+    CloneDataInDeep.isPrimitive = function (data) {
+        return data !== Object(data) || data instanceof Date;
+    };
+    CloneDataInDeep.clone = function (obj) {
+        if (this.isPrimitive(obj)) {
+            return obj;
         }
-        else if (value instanceof Map) {
-            cloneObj[key] = cloneMap(value);
+        if (obj instanceof Map) {
+            return this.cloneMap(obj);
         }
-        else if (value instanceof Set) {
-            cloneObj[key] = cloneSet(value);
+        if (obj instanceof Set) {
+            return this.cloneSet(obj);
         }
-        else if (Array.isArray(value)) {
-            cloneObj[key] = cloneArray(value);
+        if (Array.isArray(obj)) {
+            return this.cloneArray(obj);
         }
-        else if (value instanceof Object) {
-            var newClone = clone(value);
-            cloneObj[key] = __assign({}, newClone);
+        var cloneObj = {};
+        for (var _i = 0, _a = Object.entries(obj); _i < _a.length; _i++) {
+            var _b = _a[_i], key = _b[0], value = _b[1];
+            if (this.isPrimitive(value)) {
+                cloneObj[key] = value;
+            }
+            else if (value instanceof Map) {
+                cloneObj[key] = this.cloneMap(value);
+            }
+            else if (value instanceof Set) {
+                cloneObj[key] = this.cloneSet(value);
+            }
+            else if (Array.isArray(value)) {
+                cloneObj[key] = this.cloneArray(value);
+            }
+            else if (value instanceof Object) {
+                var newClone = this.clone(value);
+                cloneObj[key] = __assign({}, newClone);
+            }
+            else {
+                throw new Error("It is not possible to clone this data: " + value);
+            }
         }
-        else {
-            throw new Error("It is not possible to clone this data: " + value);
-        }
-    }
-    return cloneObj;
-}
-exports.clone = clone;
+        return cloneObj;
+    };
+    return CloneDataInDeep;
+}());
+exports.CloneDataInDeep = CloneDataInDeep;
