@@ -1,7 +1,7 @@
 {
-  "name": "typescript-clone-data",
-  "version": "1.0.0",
-  "description": "Study project",
+  "name": "typescript-clone-data-in-deep",
+  "version": "1.0.1",
+  "description": "javascript or typescript clone data in deep",
   "main": "index.js",
   "dependencies": {
     "tslint": "^6.1.3"
@@ -18,6 +18,30 @@
     "start": "npx ts-node src/index.ts",
     "build": "npx tsc src/index.ts"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Milton Velilla",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miltonvelillac/clone-data.git"
+  },
+  "keywords": [
+    "typescript",
+    "javascript",
+    "clone",
+    "clone",
+    "object",
+    "clone",
+    "array",
+    "clone",
+    "map",
+    "clone",
+    "set",
+    "clone",
+    "in",
+    "deep"
+  ],
+  "bugs": {
+    "url": "https://github.com/miltonvelillac/clone-data/issues"
+  },
+  "homepage": "https://github.com/miltonvelillac/clone-data#readme"
 }
