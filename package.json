@@ -16,7 +16,8 @@
     "test": "npm run build & jest",
     "test:watch": "npm run build & jest --watch",
     "start": "npx ts-node src/index.ts",
-    "build": "npx tsc src/index.ts"
+    "build": "npx tsc src/index.ts",
+    "publish": "npm publish"
   },
   "author": "Milton Velilla",
   "license": "ISC",
