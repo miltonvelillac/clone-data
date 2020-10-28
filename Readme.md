@@ -1,4 +1,4 @@
-# TYPESCRIPT-CLONE-DATA is a typescript is a set of functions that allow clone complex objects, maps, sets or arrays
+# TYPESCRIPT-CLONE-DATA is a typescript is a set of functions that allow clone in deep complex objects, maps, sets or arrays
 * For a complex object use clone function
 - const myClonedObject = clone(myObject)
 * For a complex or simple array use cloneArray function
