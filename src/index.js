@@ -66,9 +66,12 @@ function clone(obj) {
         else if (Array.isArray(value)) {
             cloneObj[key] = cloneArray(value);
         }
-        else {
+        else if (value instanceof Object) {
             var newClone = clone(value);
             cloneObj[key] = __assign({}, newClone);
+        }
+        else {
+            throw new Error("It is not possible to clone this data: " + value);
         }
     }
     return cloneObj;

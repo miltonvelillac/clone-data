@@ -53,9 +53,11 @@ export function clone<T>(obj: T): any {
       cloneObj[key] = cloneSet(value);
     } else if (Array.isArray(value)) {
       cloneObj[key] = cloneArray(value);
-    } else {
+    } else if (value instanceof Object) {
       const newClone = clone(value);
       cloneObj[key] = { ...newClone };
+    } else {
+      throw new Error(`It is not possible to clone this data: ${value}`)
     }
 
   }

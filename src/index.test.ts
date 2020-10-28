@@ -196,7 +196,7 @@ describe('#cloneSet', () => {
     });
 });
 
-fdescribe('#clone Function', () => {
+describe('#clone Function', () => {
     test('clone a simple data', () => {
         // Arrange:
         const dataString = 'hello';
