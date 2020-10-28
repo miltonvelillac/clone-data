@@ -312,6 +312,33 @@ describe('#clone Function', () => {
         expect(Array.from(newObject.setTest)[3]).not.toBe(Array.from(object.setTest)[3]);
         expect(Array.from(newObject.setTest)[4]).not.toBe(Array.from(object.setTest)[4]);
     });
+
+    test('clone an object and change data', () => {
+        // Arrange:
+        const object: any = {
+            date: new Date(2020/10/28),
+            name: 'Son Goku',
+            childObject: {
+                date: new Date(2020/10/7)
+            }
+        };
+
+        // Act:
+        const clonedObject = clone(object);
+        const unClonedObject = object;
+
+        object.date = new Date(2020/11/10);
+        object.name = 'Vegeta';
+        object.childObject.date = new Date(2021/11/20);
+
+        // Assert:
+        expect(clonedObject.date).not.toEqual(object.date);
+        expect(clonedObject.name).not.toEqual(object.name);
+        expect(clonedObject.childObject.date).not.toEqual(object.childObject.date);
+        expect(unClonedObject).toEqual(object);
+
+        expect(unClonedObject).toBe(object);
+    });
 });
 
 describe('#isPrimitive', () => {
