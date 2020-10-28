@@ -12,6 +12,7 @@
 
 # EXAMPLES:
 * clone function
+```
 function testClone() {
     const objectTest = {
         id: '123',
@@ -24,14 +25,18 @@ function testClone() {
     };
     const clonedObject = CloneDataInDeep.clone(objectTest);
 }
+```
 
 * cloneArray function
+```
 function testClone() {
     const arrayTest: any[] = [1, 2, 'hello', { id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, { data: 99 }] }];
     const clonedArray: any[] = CloneDataInDeep.cloneArray(arrayTest);
 }
+```
 
 * cloneMap function
+```
 function testClone() {
     const mapTest = new Map()
             .set('firstKey', 1)
@@ -40,8 +45,10 @@ function testClone() {
             .set('fourth', new Set().add({ id: '1234' }));
     const clonedMap = CloneDataInDeep.cloneMap(mapTest);
 }
+```
 
 * myClonedSet function
+```
 function testClone() {
     const setTest = new Set()
             .add(99)
@@ -51,3 +58,4 @@ function testClone() {
             .add([4, { data: 99 }]);
     const clonedSet = CloneDataInDeep.cloneSet(setTest);
 }
+```
