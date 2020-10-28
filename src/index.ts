@@ -25,7 +25,7 @@ export function isPrimitive(data: any): boolean {
   return data !== Object(data) || data instanceof Date;
 }
 
-export function clone(obj: any): any {
+export function clone<T>(obj: T): any {
 
   if (isPrimitive(obj)) {
     return obj;
@@ -61,26 +61,3 @@ export function clone(obj: any): any {
   }
   return cloneObj;
 }
-
-
-// const map = new Map().set('first', 'valueFirst').set('second', 'valueSecond');
-
-// const object1 = {
-//   a: "somestring",
-//   b: 42,
-//   c: { name: "my name", data: { oth: 'other value' } },
-//   d: ['first', 2],
-//   e: ['first', { obj: { name: 'my name again' } }, [4, { obj: 'my obj', myDate: new Date('2020/07/10'), map }]]
-// };
-
-// const cloneObjt = clone(object1);
-// const y = object1;
-// object1.a = 'new Data';
-// object1.b = 99;
-// object1.c = { name: "NEW NAME", data: {oth: 'NEW OTHER VALUE'} };
-// object1.d = ['NEW FIRST', 2222];
-// object1.e = ['SECOND', {obj: {name: 'MY NEW NAME AGAIN'}}, [444, {obj: 'MY NEW OBJ', myDate: new Date('2019/08/11'), map: new Map().set('first', 'NEW VALUEEEEEE')}]];
-
-// console.log('CLONE RESULT', cloneObjt);
-// console.log('object1', object1);
-// console.log('y', y);

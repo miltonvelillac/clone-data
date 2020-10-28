@@ -1,4 +1,4 @@
-import { cloneArray, cloneMap, cloneSet, isPrimitive } from "./index";
+import { clone, cloneArray, cloneMap, cloneSet, isPrimitive } from "./index";
 
 describe('#cloneArray', () => {
     test('clone a simple array', () => {
@@ -196,6 +196,123 @@ describe('#cloneSet', () => {
     });
 });
 
+fdescribe('#clone Function', () => {
+    test('clone a simple data', () => {
+        // Arrange:
+        const dataString = 'hello';
+        const dataTime = new Date();
+        const dataBoolean = true;
+        const dataNumber = 1000;
+
+        // Act:
+        const newDataString = clone(dataString);
+        const newDataTime = clone(dataTime);
+        const newDataBoolean = clone(dataBoolean);
+        const newDataNumber = clone(dataNumber);
+
+        // Assert:
+        expect(newDataString).toEqual(dataString);
+        expect(newDataTime).toEqual(dataTime);
+        expect(newDataBoolean).toEqual(dataBoolean);
+        expect(newDataNumber).toEqual(dataNumber);
+    });
+
+    test('clone a simple data null or undefined', () => {
+        // Arrange:
+        const dataNull = null;
+        const dataUndefined = undefined;
+
+        // Act:
+        const newDataNull = clone(dataNull);
+        const newDataUndefined = clone(dataUndefined);
+
+        // Assert:
+        expect(newDataNull).toEqual(dataNull);
+        expect(newDataUndefined).toEqual(dataUndefined);
+    });
+
+    test('clone a simple object', () => {
+        // Arrange:
+        const object = { id: '123', name: 'Son Goku', age: 33, date: new Date(), allow: true, injured: false };
+
+        // Act:
+        const newObject = clone(object);
+
+        // Assert:
+        expect(newObject).toEqual(object);
+        expect(newObject).not.toBe(object);
+    });
+
+    test('clone a complex object', () => {
+        // Arrange:
+
+        // Map
+        const secondKey = 99;
+        const thirdKey = new Date().getTime;
+        const fourthKey = 'Set';
+        const mapTest = new Map()
+            .set('firstKey', 1)
+            .set(secondKey, { id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, { data: 99 }] })
+            .set(thirdKey, new Map().set('name', 'Goku'))
+            .set(fourthKey, new Set().add({ id: '1234' }));
+
+        // Array
+        const arrTest = [1, 2, 'hello', { id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, { data: 99 }] }];
+
+        // Set
+        const setTest = new Set()
+            .add(99)
+            .add({ id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, { data: 99 }] })
+            .add(new Map().set('name', 'Goku'))
+            .add(new Set().add({ id: '1234' }))
+            .add([4, { data: 99 }]);
+
+        // Object
+        const object: any = {
+            id: '123',
+            arrTest,
+            mapTest,
+            setTest
+        };
+
+        // Act:
+        const newObject = clone(object);
+
+        const objFirsSet: any = Array.from(object.setTest)[1];
+        const objFirsSetResult: any = Array.from(newObject.setTest)[1];
+
+        // Assert:
+        expect(newObject).toEqual(object);
+
+        expect(newObject).not.toBe(object);
+
+        expect(newObject.arrTest).not.toBe(object.arrTest);
+        expect(newObject.arrTest[3]).not.toBe(object.arrTest[3]);
+        expect(newObject.arrTest[3].myMap).not.toBe(object.arrTest[3].myMap);
+        expect(newObject.arrTest[3].mySet).not.toBe(object.arrTest[3].mySet);
+        expect(newObject.arrTest[3].arr).not.toBe(object.arrTest[3].arr);
+        expect(newObject.arrTest[3].arr[1]).not.toBe(object.arrTest[3].arr[1]);
+
+        expect(newObject.mapTest).not.toBe(object.mapTest);
+        expect(newObject.mapTest.get(secondKey)).not.toBe(object.mapTest.get(secondKey));
+        expect(newObject.mapTest.get(secondKey).myMap).not.toBe(object.mapTest.get(secondKey).myMap);
+        expect(newObject.mapTest.get(secondKey).mySet).not.toBe(object.mapTest.get(secondKey).mySet);
+        expect(newObject.mapTest.get(secondKey).arr).not.toBe(object.mapTest.get(secondKey).arr);
+        expect(newObject.mapTest.get(secondKey).arr[1]).not.toBe(object.mapTest.get(secondKey).arr[1]);
+        expect(newObject.mapTest.get(thirdKey)).not.toBe(object.mapTest.get(thirdKey));
+        expect(newObject.mapTest.get(fourthKey)).not.toBe(object.mapTest.get(fourthKey));
+
+
+        expect(newObject.setTest).not.toBe(object.setTest);
+        expect(objFirsSetResult).not.toBe(objFirsSet);
+        expect(objFirsSetResult.myMap).not.toBe(objFirsSet.myMap);
+        expect(objFirsSetResult.mySet).not.toBe(objFirsSet.mySet);
+        expect(objFirsSetResult.arr).not.toBe(objFirsSet.arr);
+        expect(Array.from(newObject.setTest)[2]).not.toBe(Array.from(object.setTest)[2]);
+        expect(Array.from(newObject.setTest)[3]).not.toBe(Array.from(object.setTest)[3]);
+        expect(Array.from(newObject.setTest)[4]).not.toBe(Array.from(object.setTest)[4]);
+    });
+});
 
 describe('#isPrimitive', () => {
     test('isPrimitive boolean', () => {
