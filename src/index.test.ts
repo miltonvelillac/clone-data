@@ -201,7 +201,7 @@ describe('#isPrimitive', () => {
     test('isPrimitive boolean', () => {
         // Arrange:
         const primitiveDataTrue = true;
-        const primitiveDataFalse = true;
+        const primitiveDataFalse = false;
 
         // Act:
         const isPrimitiveResponseTrue: boolean = isPrimitive(primitiveDataTrue);
