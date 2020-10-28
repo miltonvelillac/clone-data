@@ -15,7 +15,7 @@ describe('#cloneArray', () => {
 
     test('clone a complex array with internal object', () => {
         // Arrange:
-        const arrayTest: any[] = [1, 2, 'hello', {id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, {data: 99}]}];
+        const arrayTest: any[] = [1, 2, 'hello', { id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, { data: 99 }] }];
 
         // Act:
         const newArray: any[] = cloneArray(arrayTest);
@@ -35,6 +35,29 @@ describe('#cloneArray', () => {
         expect(newArray[3].arr).not.toBe(arrayTest[3].arr);
         expect(newArray[3].arr[1]).not.toBe(arrayTest[3].arr[1]);
     });
+
+    test('without clone a complex array with internal object', () => {
+        // Arrange:
+        const arrayTest: any[] = [1, 2, 'hello', { id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, { data: 99 }] }];
+
+        // Act:
+        const newArray: any[] = arrayTest;
+
+        // Assert:
+        expect(newArray).toEqual(arrayTest);
+        expect(newArray[3]).toEqual(arrayTest[3]);
+        expect(newArray[3].myMap).toEqual(arrayTest[3].myMap);
+        expect(newArray[3].mySet).toEqual(arrayTest[3].mySet);
+        expect(newArray[3].arr).toEqual(arrayTest[3].arr);
+        expect(newArray[3].arr[1]).toEqual(arrayTest[3].arr[1]);
+
+        expect(newArray).toBe(arrayTest);
+        expect(newArray[3]).toBe(arrayTest[3]);
+        expect(newArray[3].myMap).toBe(arrayTest[3].myMap);
+        expect(newArray[3].mySet).toBe(arrayTest[3].mySet);
+        expect(newArray[3].arr).toBe(arrayTest[3].arr);
+        expect(newArray[3].arr[1]).toBe(arrayTest[3].arr[1]);
+    });
 });
 
 describe('#cloneMap', () => {
@@ -49,6 +72,58 @@ describe('#cloneMap', () => {
         expect(newMap).toEqual(mapTest);
         expect(newMap).not.toBe(mapTest);
     });
+
+    test('clone a complex map', () => {
+        // Arrange:
+        const secondKey = 99;
+        const thirdKey = new Date().getTime;
+        const fourth = 'Set';
+        const mapTest = new Map()
+            .set('firstKey', 1)
+            .set(secondKey, { id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, { data: 99 }] })
+            .set(thirdKey, new Map().set('name', 'Goku'))
+            .set(fourth, new Set().add({ id: '1234' }));
+
+        // Act:
+        const newMap = cloneMap(mapTest);
+
+        // Assert:
+        expect(newMap).toEqual(mapTest);
+
+        expect(newMap).not.toBe(mapTest);
+        expect(newMap.get(secondKey)).not.toBe(mapTest.get(secondKey));
+        expect(newMap.get(secondKey).myMap).not.toBe(mapTest.get(secondKey).myMap);
+        expect(newMap.get(secondKey).mySet).not.toBe(mapTest.get(secondKey).mySet);
+        expect(newMap.get(secondKey).mySet).not.toBe(mapTest.get(secondKey).arr);
+        expect(newMap.get(secondKey).mySet).not.toBe(mapTest.get(secondKey).arr[1]);
+        expect(newMap.get(thirdKey)).not.toBe(mapTest.get(thirdKey));
+        expect(newMap.get(fourth)).not.toBe(mapTest.get(fourth));
+    });
+
+    test('without clone a complex map', () => {
+        // Arrange:
+        const secondKey = 99;
+        const thirdKey = new Date().getTime;
+        const fourth = 'Set';
+        const mapTest = new Map()
+            .set('firstKey', 1)
+            .set(secondKey, { id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, { data: 99 }] })
+            .set(thirdKey, new Map().set('name', 'Goku'))
+            .set(fourth, new Set().add({ id: '1234' }));
+
+        // Act:
+        const newMap = mapTest;
+
+        // Assert:
+        expect(newMap).toEqual(mapTest);
+
+        expect(newMap).toBe(mapTest);
+        expect(newMap.get(secondKey)).toBe(mapTest.get(secondKey));
+        expect(newMap.get(secondKey).myMap).toBe(mapTest.get(secondKey).myMap);
+        expect(newMap.get(secondKey).mySet).toBe(mapTest.get(secondKey).mySet);
+        expect(newMap.get(thirdKey)).toBe(mapTest.get(thirdKey));
+        expect(newMap.get(fourth)).toBe(mapTest.get(fourth));
+    });
 });
 
 describe('#cloneSet', () => {
@@ -62,6 +137,62 @@ describe('#cloneSet', () => {
         // Assert:
         expect(newSet).toEqual(setTest);
         expect(newSet).not.toBe(setTest);
+    });
+
+    test('clone a complex set', () => {
+        // Arrange:
+        const setTest = new Set()
+            .add(99)
+            .add({ id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, { data: 99 }] })
+            .add(new Map().set('name', 'Goku'))
+            .add(new Set().add({ id: '1234' }))
+            .add([4, { data: 99 }]);
+
+        // Act:
+        const newSet = cloneSet(setTest);
+
+        const objFirsSet: any = Array.from(setTest)[1];
+        const objFirsSetResult: any = Array.from(newSet)[1];
+
+        // Assert:
+        expect(newSet).toEqual(setTest);
+
+        expect(newSet).not.toBe(setTest);
+        expect(Array.from(newSet)[1]).not.toBe(Array.from(setTest)[1]);
+        expect(objFirsSetResult.myMap).not.toBe(objFirsSet.myMap);
+        expect(objFirsSetResult.mySet).not.toBe(objFirsSet.mySet);
+        expect(objFirsSetResult.arr).not.toBe(objFirsSet.arr);
+        expect(Array.from(newSet)[2]).not.toBe(Array.from(setTest)[2]);
+        expect(Array.from(newSet)[3]).not.toBe(Array.from(setTest)[3]);
+        expect(Array.from(newSet)[4]).not.toBe(Array.from(setTest)[4]);
+    });
+
+    test('whitout clone a complex set', () => {
+        // Arrange:
+        const setTest = new Set()
+            .add(99)
+            .add({ id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, { data: 99 }] })
+            .add(new Map().set('name', 'Goku'))
+            .add(new Set().add({ id: '1234' }))
+            .add([4, { data: 99 }]);
+
+        // Act:
+        const newSet = setTest;
+
+        const objFirsSet: any = Array.from(setTest)[1];
+        const objFirsSetResult: any = Array.from(newSet)[1];
+
+        // Assert:
+        expect(newSet).toEqual(setTest);
+
+        expect(newSet).toBe(setTest);
+        expect(Array.from(newSet)[1]).toBe(Array.from(setTest)[1]);
+        expect(objFirsSetResult.myMap).toBe(objFirsSet.myMap);
+        expect(objFirsSetResult.mySet).toBe(objFirsSet.mySet);
+        expect(objFirsSetResult.arr).toBe(objFirsSet.arr);
+        expect(Array.from(newSet)[2]).toBe(Array.from(setTest)[2]);
+        expect(Array.from(newSet)[3]).toBe(Array.from(setTest)[3]);
+        expect(Array.from(newSet)[4]).toBe(Array.from(setTest)[4]);
     });
 });
 
