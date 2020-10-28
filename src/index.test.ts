@@ -1,29 +1,70 @@
-import { cloneArray, cloneMap, isPrimitive } from "./index";
+import { cloneArray, cloneMap, cloneSet, isPrimitive } from "./index";
 
+describe('#cloneArray', () => {
+    test('clone a simple array', () => {
+        // Arrange:
+        const arrayTest = [1, 2, 'hello'];
 
-test('cloneArray', () => {
-    // Arrange:
-    const arrayTest = [1, 2, 'hello'];
+        // Act:
+        const newArray = cloneArray(arrayTest);
 
-    // Act:
-    const newArray = cloneArray(arrayTest);
+        // Assert:
+        expect(newArray).toEqual(arrayTest);
+        expect(newArray).not.toBe(arrayTest);
+    });
 
-    // Assert:
-    expect(newArray).toEqual(arrayTest);
-    expect(newArray).not.toBe(arrayTest);
+    test('clone a complex array with internal object', () => {
+        // Arrange:
+        const arrayTest: any[] = [1, 2, 'hello', {id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, {data: 99}]}];
+
+        // Act:
+        const newArray: any[] = cloneArray(arrayTest);
+
+        // Assert:
+        expect(newArray).toEqual(arrayTest);
+        expect(newArray[3]).toEqual(arrayTest[3]);
+        expect(newArray[3].myMap).toEqual(arrayTest[3].myMap);
+        expect(newArray[3].mySet).toEqual(arrayTest[3].mySet);
+        expect(newArray[3].arr).toEqual(arrayTest[3].arr);
+        expect(newArray[3].arr[1]).toEqual(arrayTest[3].arr[1]);
+
+        expect(newArray).not.toBe(arrayTest);
+        expect(newArray[3]).not.toBe(arrayTest[3]);
+        expect(newArray[3].myMap).not.toBe(arrayTest[3].myMap);
+        expect(newArray[3].mySet).not.toBe(arrayTest[3].mySet);
+        expect(newArray[3].arr).not.toBe(arrayTest[3].arr);
+        expect(newArray[3].arr[1]).not.toBe(arrayTest[3].arr[1]);
+    });
 });
 
-test('cloneMap', () => {
-    // Arrange:
-    const mapTest = new Map().set('firstKey', 1). set('secondKey', true).set(99, new Date());
+describe('#cloneMap', () => {
+    test('clone a simple map', () => {
+        // Arrange:
+        const mapTest = new Map().set('firstKey', 1).set('secondKey', true).set(99, new Date());
 
-    // Act:
-    const newMap = cloneMap(mapTest);
+        // Act:
+        const newMap = cloneMap(mapTest);
 
-    // Assert:
-    expect(newMap).toEqual(mapTest);
-    expect(newMap).not.toBe(mapTest);
+        // Assert:
+        expect(newMap).toEqual(mapTest);
+        expect(newMap).not.toBe(mapTest);
+    });
 });
+
+describe('#cloneSet', () => {
+    test('clone a simple set', () => {
+        // Arrange:
+        const setTest = new Set().add(99);
+
+        // Act:
+        const newSet = cloneSet(setTest);
+
+        // Assert:
+        expect(newSet).toEqual(setTest);
+        expect(newSet).not.toBe(setTest);
+    });
+});
+
 
 describe('#isPrimitive', () => {
     test('isPrimitive boolean', () => {
@@ -96,7 +137,7 @@ describe('#isPrimitive', () => {
 
     test('isPrimitive Object should be false', () => {
         // Arrange:
-        const object = {id: 'dsfjsltjew', name: 'Son Goku'};
+        const object = { id: 'dsfjsltjew', name: 'Son Goku' };
         const objectEmpty = {};
 
         // Act:

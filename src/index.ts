@@ -8,6 +8,15 @@ export function cloneMap<K, V>(currentMap: Map<K, V>): Map<K, V> {
   return newMap;
 }
 
+export function cloneSet<T>(currentSet: Set<T>): Set<T> {
+  const newSet = new Set<T>();
+  currentSet.forEach((value: T) => {
+    const newValue = clone(value);
+    newSet.add(newValue);
+  });
+  return newSet;
+}
+
 export function cloneArray<T>(currentArray: T[]): T[] {
   return currentArray.map((arrayValue: any) => clone(arrayValue));
 }
@@ -26,6 +35,10 @@ export function clone(obj: any): any {
     return cloneMap(obj);
   }
 
+  if (obj instanceof Set) {
+    return cloneSet(obj);
+  }
+
   if (Array.isArray(obj)) {
     return cloneArray(obj);
   }
@@ -36,6 +49,8 @@ export function clone(obj: any): any {
       cloneObj[key] = value;
     } else if (value instanceof Map) {
       cloneObj[key] = cloneMap(value);
+    } else if (value instanceof Set) {
+      cloneObj[key] = cloneSet(value);
     } else if (Array.isArray(value)) {
       cloneObj[key] = cloneArray(value);
     } else {

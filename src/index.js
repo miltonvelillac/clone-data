@@ -11,7 +11,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 exports.__esModule = true;
-exports.clone = exports.isPrimitive = exports.cloneArray = exports.cloneMap = void 0;
+exports.clone = exports.isPrimitive = exports.cloneArray = exports.cloneSet = exports.cloneMap = void 0;
 function cloneMap(currentMap) {
     var newMap = new Map();
     currentMap.forEach(function (val, keyMap, mapVal) {
@@ -21,6 +21,15 @@ function cloneMap(currentMap) {
     return newMap;
 }
 exports.cloneMap = cloneMap;
+function cloneSet(currentSet) {
+    var newSet = new Set();
+    currentSet.forEach(function (value) {
+        var newValue = clone(value);
+        newSet.add(newValue);
+    });
+    return newSet;
+}
+exports.cloneSet = cloneSet;
 function cloneArray(currentArray) {
     return currentArray.map(function (arrayValue) { return clone(arrayValue); });
 }
@@ -36,6 +45,9 @@ function clone(obj) {
     if (obj instanceof Map) {
         return cloneMap(obj);
     }
+    if (obj instanceof Set) {
+        return cloneSet(obj);
+    }
     if (Array.isArray(obj)) {
         return cloneArray(obj);
     }
@@ -47,6 +59,9 @@ function clone(obj) {
         }
         else if (value instanceof Map) {
             cloneObj[key] = cloneMap(value);
+        }
+        else if (value instanceof Set) {
+            cloneObj[key] = cloneSet(value);
         }
         else if (Array.isArray(value)) {
             cloneObj[key] = cloneArray(value);
