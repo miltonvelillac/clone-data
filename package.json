@@ -1,6 +1,6 @@
 {
   "name": "typescript-clone-data-in-deep",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "javascript or typescript clone data in deep",
   "main": "src/index.js",
   "dependencies": {
