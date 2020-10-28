@@ -1,6 +1,22 @@
 import { CloneDataInDeep } from "./index";
 
 describe('#cloneArray', () => {
+    test('clone a fail array', () => {
+        // Arrange:
+        const arrayFail: any = {data: 'myData'};
+        let errorExpected;
+
+        // Act:
+        try {
+            CloneDataInDeep.cloneArray(arrayFail);
+        } catch (error) {
+            errorExpected = error.message;
+        }
+
+        // Assert:
+        expect(errorExpected).toContain(`This is not an array: ${arrayFail}`);
+    });
+
     test('clone a simple array', () => {
         // Arrange:
         const arrayTest = [1, 2, 'hello'];
@@ -61,6 +77,21 @@ describe('#cloneArray', () => {
 });
 
 describe('#cloneMap', () => {
+    test('clone a fail map', () => {
+        // Arrange:
+        const mapFail: any = {data: 'myData'};
+        let errorExpected;
+
+        // Act:
+        try {
+            CloneDataInDeep.cloneMap(mapFail);
+        } catch (error) {
+            errorExpected = error.message;
+        }
+
+        // Assert:
+        expect(errorExpected).toContain(`This is not a MAP: ${mapFail}`);
+    });
     test('clone a simple map', () => {
         // Arrange:
         const mapTest = new Map().set('firstKey', 1).set('secondKey', true).set(99, new Date());
@@ -127,6 +158,21 @@ describe('#cloneMap', () => {
 });
 
 describe('#cloneSet', () => {
+    test('clone a fail set', () => {
+        // Arrange:
+        const setFail: any = {data: 'myData'};
+        let errorExpected;
+
+        // Act:
+        try {
+            CloneDataInDeep.cloneSet(setFail);
+        } catch (error) {
+            errorExpected = error.message;
+        }
+
+        // Assert:
+        expect(errorExpected).toContain(`This is not a SET: ${setFail}`);
+    });
     test('clone a simple set', () => {
         // Arrange:
         const setTest = new Set().add(99);

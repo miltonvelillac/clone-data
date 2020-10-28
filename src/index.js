@@ -17,6 +17,9 @@ var CloneDataInDeep = /** @class */ (function () {
     }
     CloneDataInDeep.cloneMap = function (currentMap) {
         var _this = this;
+        if (!(currentMap instanceof Map)) {
+            throw new Error("This is not a MAP: " + currentMap);
+        }
         var newMap = new Map();
         currentMap.forEach(function (val, keyMap, mapVal) {
             var newVal = _this.clone(val);
@@ -26,6 +29,9 @@ var CloneDataInDeep = /** @class */ (function () {
     };
     CloneDataInDeep.cloneSet = function (currentSet) {
         var _this = this;
+        if (!(currentSet instanceof Set)) {
+            throw new Error("This is not a SET: " + currentSet);
+        }
         var newSet = new Set();
         currentSet.forEach(function (value) {
             var newValue = _this.clone(value);
@@ -35,6 +41,9 @@ var CloneDataInDeep = /** @class */ (function () {
     };
     CloneDataInDeep.cloneArray = function (currentArray) {
         var _this = this;
+        if (!Array.isArray(currentArray)) {
+            throw new Error("This is not an array: " + currentArray);
+        }
         return currentArray.map(function (arrayValue) { return _this.clone(arrayValue); });
     };
     CloneDataInDeep.isPrimitive = function (data) {

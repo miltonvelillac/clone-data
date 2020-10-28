@@ -1,6 +1,9 @@
 
 export class CloneDataInDeep {
   static cloneMap<K, V>(currentMap: Map<K, V>): Map<K, V> {
+    if (!(currentMap instanceof Map)) {
+      throw new Error(`This is not a MAP: ${currentMap}`);
+    }
     const newMap = new Map();
     currentMap.forEach((val, keyMap, mapVal) => {
       const newVal = this.clone(val);
@@ -10,6 +13,9 @@ export class CloneDataInDeep {
   }
 
   static cloneSet<T>(currentSet: Set<T>): Set<T> {
+    if (!(currentSet instanceof Set)) {
+      throw new Error(`This is not a SET: ${currentSet}`);
+    }
     const newSet = new Set<T>();
     currentSet.forEach((value: T) => {
       const newValue = this.clone(value);
@@ -19,6 +25,9 @@ export class CloneDataInDeep {
   }
 
   static cloneArray<T>(currentArray: T[]): T[] {
+    if (!Array.isArray(currentArray)) {
+      throw new Error(`This is not an array: ${currentArray}`);
+    }
     return currentArray.map((arrayValue: any) => this.clone(arrayValue));
   }
 
@@ -58,7 +67,7 @@ export class CloneDataInDeep {
         const newClone = this.clone(value);
         cloneObj[key] = { ...newClone };
       } else {
-        throw new Error(`It is not possible to clone this data: ${value}`)
+        throw new Error(`It is not possible to clone this data: ${value}`);
       }
 
     }
