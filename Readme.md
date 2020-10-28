@@ -30,7 +30,16 @@ function testClone() {
 * cloneArray function
 ```
 function testClone() {
-    const arrayTest: any[] = [1, 2, 'hello', { id: 'myId', myMap: new Map().set(1, 44), mySet: new Set().add(99), arr: [4, { data: 99 }] }];
+    const arrayTest: any[] = [
+        1,
+        'hello',
+        {
+            id: 'myId',
+            myMap: new Map().set(1, 44),
+            mySet: new Set().add(99),
+            arr: [4, { data: 99 }]
+        }
+    ];
     const clonedArray: any[] = CloneDataInDeep.cloneArray(arrayTest);
 }
 ```
