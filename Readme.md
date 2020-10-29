@@ -11,7 +11,7 @@
 * or if you prefer for any of the cases you can use the clone function
 
 # EXAMPLES:
-* clone function
+* clone function, this function is useful for any kind of data (objects, arrays, sets, maps) but if you want to be more specific you can use these other functions cloneArray, cloneMap and cloneSet
 ```
 function testClone() {
     const objectTest = {
