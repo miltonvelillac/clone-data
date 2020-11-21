@@ -13,7 +13,7 @@
     "typescript": "^4.0.5"
   },
   "scripts": {
-    "test": "npm run build & jest",
+    "test": "jest",
     "test:watch": "npm run build & jest --watch",
     "start": "npx ts-node src/index.ts",
     "build": "npx tsc src/index.ts"

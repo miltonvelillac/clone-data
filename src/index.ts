@@ -1,11 +1,10 @@
-
 export class CloneDataInDeep {
   static cloneMap<K, V>(currentMap: Map<K, V>): Map<K, V> {
     if (!(currentMap instanceof Map)) {
       throw new Error(`This is not a MAP: ${currentMap}`);
     }
     const newMap = new Map();
-    currentMap.forEach((val, keyMap, mapVal) => {
+    currentMap.forEach((val, keyMap) => {
       const newVal = this.clone(val);
       newMap.set(keyMap, newVal);
     });
